@@ -17,10 +17,7 @@
 
 
         $res = mysqli_query($con,$sql);
-        if(mysqli_fetch_lengths($res)==0)//user 없음
-          array_push($result, 
-            array('title'=>"fail",'cause'=>'user not exist'));
-       
+      
         while($row = mysqli_fetch_array($res)){
     
             //존재안하는 user
@@ -46,7 +43,11 @@
                 array('title'=>"fail",'cause'=>'user not exist'));
             }
         }
-
+        
+        if(!strcmp(json_encode($result), "[]"))
+                array_push($result, 
+                array('title'=>"fail",'cause'=>'user not exist'));
+        
     echo json_encode(array("result"=>$result));
     mysqli_close($con);
 
