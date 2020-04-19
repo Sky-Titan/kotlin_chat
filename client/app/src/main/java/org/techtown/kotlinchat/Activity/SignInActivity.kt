@@ -15,15 +15,17 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
-        //로그인
-        signin_btn_signin.setOnClickListener(View.OnClickListener {
-            var signInAsync = SignInAsync(this, this)
-            signInAsync.execute(userID_edit_signin.text.toString(), userPW_edit_signin.text.toString())
-        })
 
-        signup_btn_signup.setOnClickListener(View.OnClickListener {
-            var intent = Intent(this,SignUpActivity::class.java)
-            startActivity(intent)
-        })
+    }
+
+    fun signinClicked(v: View)
+    {
+        var signInAsync = SignInAsync(this, this)
+        signInAsync.execute(userID_edit_signin.text.toString().trim(), userPW_edit_signin.text.toString().trim())
+    }
+    fun signupClicked(v: View)
+    {
+        var intent = Intent(this,SignUpActivity::class.java)
+        startActivity(intent)
     }
 }

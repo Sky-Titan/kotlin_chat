@@ -14,7 +14,7 @@
         $user_password = $_POST['user_password'];
         $sql=$sql.$user_ID."'";
     
-
+        
 
         $res = mysqli_query($con,$sql);
       
@@ -24,7 +24,7 @@
             if(strcmp($row[0],$user_ID))
             {
                 array_push($result, 
-                array('title'=>"fail",'cause'=>'user not exist'));
+                array('title'=>"fail",'cause'=>"user not exist"));
             }
             //비밀번호 불일치
             else if(strcmp($row[1], $user_password))
