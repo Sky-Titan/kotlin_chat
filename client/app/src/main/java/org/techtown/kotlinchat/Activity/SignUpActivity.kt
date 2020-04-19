@@ -19,7 +19,7 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-<<<<<<< HEAD
+
 
 
     }
@@ -35,12 +35,12 @@ class SignUpActivity : AppCompatActivity() {
         {
             Toast.makeText(this,"비밀번호가 다릅니다.",Toast.LENGTH_SHORT).show()
         }
-=======
+
         
         signup_btn_signup.setOnClickListener(View.OnClickListener {
                 
         })
->>>>>>> test
+
     }
 
 }
