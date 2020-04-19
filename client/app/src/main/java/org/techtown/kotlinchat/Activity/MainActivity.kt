@@ -17,11 +17,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var recyclerItem:RecyclerItem = RecyclerItem();
+        //var recyclerItem:RecyclerItem = RecyclerItem();
 
         recyclerView = findViewById(R.id.recyclerView)
 
-        adapter = RAdapter(myDataSet)
+        //adapter = RAdapter(myDataSet)
 
     }
 
