@@ -127,7 +127,7 @@ class SignInAsync : AsyncTask<String, Void, String>{
                 }
             }
         }
-        catch (e : JSONException)
+        catch (e : Exception)
         {
             e.printStackTrace()
         }
