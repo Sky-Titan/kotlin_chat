@@ -5,9 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
      See README(https://goo.gl/l4GJaQ) for more. -->
-    <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_stat_ic_notification" />
+
     <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
          notification message. See README(https://goo.gl/6BKBk7) for more. -->
     <meta-data
@@ -20,6 +18,8 @@
             android:name="firebase_analytics_collection_enabled"
             android:value="false" />
     <application
+
+            android:name=".MyApplication"
             android:allowBackup="true"
             android:hardwareAccelerated="false"
             android:icon="@mipmap/ic_launcher"
@@ -28,7 +28,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
-            android:usesCleartextTraffic="true">
+            android:usesCleartextTraffic="true"
+            >
         <activity android:name=".Activity.SignUpActivity">
         </activity>
         <activity android:name=".Activity.SignInActivity">

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.util.Log
 import android.widget.Toast
-import org.json.JSONException
 import org.json.JSONObject
 import org.techtown.kotlinchat.Activity.MainActivity
 import org.techtown.kotlinchat.Activity.SignInActivity
@@ -17,35 +16,34 @@ import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
 
-class SignInAsync : AsyncTask<String, Void, String>{
+class SendTokenToServerAsync : AsyncTask<String, Void, String> {
 
-    private val serverURL = "http://${MyApplication.INSTANCE.IP_address}/kotlin_chat/signin.php"
+    private val serverURL = "http://${MyApplication.INSTANCE.IP_address}/kotlin_chat/getToken.php"
     private var context : Context
-    private var activity : SignInActivity
-    private val TAG = "SignInAsync"
+    private var activity : MainActivity
+    private val TAG = "SendTokenToServerAsync"
     private lateinit var user_ID : String
+    private lateinit var token : String
 
-    constructor(context : Context, activity: SignInActivity) : super()
+    constructor(context : Context, activity: MainActivity) : super()
     {
         this.context = context
         this.activity = activity
     }
 
-
     override fun onPostExecute(result: String?) {
         super.onPostExecute(result)
 
-        isComplete(result)
     }
 
     override fun doInBackground(vararg params: String?): String {
         var user_ID = params[0]
-        var user_password = params[1]
+        var token = params[1]
 
-        var postParameters ="user_ID=$user_ID&user_password=$user_password"
+        var postParameters ="user_ID=$user_ID&token=$token"
 
         this.user_ID = user_ID.toString()
-
+        Log.d(TAG,"send token to server")
         try {
             var url = URL(serverURL)
             val httpURLConnection = url.openConnection() as HttpURLConnection
@@ -92,49 +90,6 @@ class SignInAsync : AsyncTask<String, Void, String>{
             return "Error : ${e.message}"
         }
 
-    }
-
-    //로그인 완료 여부 판단
-    private fun isComplete(result: String?)
-    {
-        try {
-            var jsonObject = JSONObject(result)
-            var list = jsonObject.getJSONArray("result")
-
-            for(i in 0..list.length()-1)
-            {
-                var c = list.getJSONObject(i)
-                var title = c.getString("title")//로그인 성공, 실패 여부
-
-                if(title.equals("fail"))//로그인 실패
-                {
-                    var cause = c.getString("cause")
-
-                    //에러 메시지 띄움
-                    activity.runOnUiThread(Runnable {
-                        if(cause.equals("password wrong"))
-                            Toast.makeText(context,"비밀번호가 틀렸습니다.",Toast.LENGTH_SHORT).show()
-                        else
-                            Toast.makeText(context,"해당 ID가 존재하지 않습니다.",Toast.LENGTH_SHORT).show()
-                    })
-
-                }
-                else//로그인 성공
-                {
-                    var intent = Intent(context, MainActivity::class.java)
-
-                    //전역 클래스에 로그인 id 등록
-                    MyApplication.INSTANCE.user_ID = user_ID
-
-                    context.startActivity(intent)
-                    activity.finish()
-                }
-            }
-        }
-        catch (e : Exception)
-        {
-            e.printStackTrace()
-        }
     }
 
 }
