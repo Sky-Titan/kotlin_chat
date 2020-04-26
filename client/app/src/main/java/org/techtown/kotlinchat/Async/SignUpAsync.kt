@@ -9,6 +9,7 @@ import org.json.JSONObject
 import org.techtown.kotlinchat.Activity.MainActivity
 import org.techtown.kotlinchat.Activity.SignInActivity
 import org.techtown.kotlinchat.Activity.SignUpActivity
+import org.techtown.kotlinchat.MyApplication
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -18,7 +19,7 @@ import java.net.URL
 
 class SignUpAsync : AsyncTask<String, Void, String> {
 
-    private val serverURL = "http://119.201.70.85/kotlin_chat/signup.php"
+    private val serverURL = "http://${MyApplication.INSTANCE.IP_address}/kotlin_chat/signup.php"
     private var context : Context
     private var activity : SignUpActivity
     private val TAG = "SignUpAsync"
