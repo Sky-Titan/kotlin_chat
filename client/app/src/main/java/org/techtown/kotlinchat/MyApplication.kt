@@ -5,7 +5,7 @@ import android.app.Application
 class MyApplication : Application (){
 
     lateinit var user_ID : String
-    var IP_address ="220.122.13.59"
+    var IP_address ="222.103.59.124"
     var token : String? = null
 
     override fun onCreate() {

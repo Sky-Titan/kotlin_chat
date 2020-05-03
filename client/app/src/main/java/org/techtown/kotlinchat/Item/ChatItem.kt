@@ -1,6 +1,6 @@
 package org.techtown.kotlinchat.Item
 
-class RecyclerItem {
+class ChatItem {
 
     lateinit var chatroom_ID: String;
     lateinit var chatroom_title: String;

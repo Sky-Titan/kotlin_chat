@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import org.techtown.kotlinchat.Item.RecyclerItem
+import org.techtown.kotlinchat.Item.ChatItem
 import org.techtown.kotlinchat.R
 
-class RAdapter(private val myDataSet:Array<RecyclerItem>) : RecyclerView.Adapter<RAdapter.MyViewHolder>() {
+class RAdapter(private val myDataSet:ArrayList<ChatItem>) : RecyclerView.Adapter<RAdapter.MyViewHolder>() {
     class MyViewHolder : RecyclerView.ViewHolder
     {
         var chatroom_title : TextView
@@ -25,7 +25,6 @@ class RAdapter(private val myDataSet:Array<RecyclerItem>) : RecyclerView.Adapter
             this.context = context
         }
 
-
     }
 
 
@@ -39,14 +38,14 @@ class RAdapter(private val myDataSet:Array<RecyclerItem>) : RecyclerView.Adapter
 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
         holder.chatroom_ID.text = myDataSet[position].chatroom_ID
         holder.chatroom_title.text = myDataSet[position].chatroom_title
         holder.chatroom_people.text = myDataSet[position].chatroom_people
     }
 
     override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
         return myDataSet.size
     }
 }
