@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_all_chat_fragment.*
 import org.techtown.kotlinchat.Adapter.RAdapter
+import org.techtown.kotlinchat.Async.GetAllChatAsync
 import org.techtown.kotlinchat.Item.ChatItem
 
 import org.techtown.kotlinchat.R
@@ -18,15 +19,22 @@ class FragmentAllChat : Fragment() {
     }
 
     private lateinit var myView : View
-    private lateinit var items : ArrayList<ChatItem>
+    lateinit var items : ArrayList<ChatItem>
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         myView =  inflater.inflate(R.layout.fragment_all_chat_fragment, container, false)
 
-        //recycler view item 리스트 지정
-        items = ArrayList()
-        allchat_recyclerview.adapter = RAdapter(items)
+        //모든 채팅 정보 가져오기
+        var getAllChatAsync = GetAllChatAsync(context!!,this)
+        getAllChatAsync.execute()
         return myView
+    }
+
+    fun setRecyclerAdater(items : ArrayList<ChatItem>)
+    {
+        this.items = items
+        allchat_recyclerview.adapter = RAdapter(this.items)
     }
 
 
