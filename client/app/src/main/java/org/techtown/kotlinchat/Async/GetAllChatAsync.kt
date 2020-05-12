@@ -1,14 +1,9 @@
 package org.techtown.kotlinchat.Async
 
-import android.content.Context
-import android.content.Intent
 import android.os.AsyncTask
 import android.util.Log
-import android.widget.Toast
+import androidx.databinding.ObservableArrayList
 import org.json.JSONObject
-import org.techtown.kotlinchat.Activity.MainActivity
-import org.techtown.kotlinchat.Activity.SignInActivity
-import org.techtown.kotlinchat.Fragment.FragmentAllChat
 import org.techtown.kotlinchat.Item.ChatItem
 import org.techtown.kotlinchat.MyApplication
 import java.io.BufferedReader
@@ -21,15 +16,13 @@ import java.net.URL
 class GetAllChatAsync : AsyncTask<String, Void, String> {
 
     private val serverURL = "http://${MyApplication.INSTANCE.IP_address}/kotlin_chat/getAllChat.php"
-    private var context : Context
-    private var fragmentAllChat : FragmentAllChat
+
     private val TAG = "GetAllChatAsync"
+    var chatList: ObservableArrayList<ChatItem>
 
-
-    constructor(context : Context, fragmentAllChat: FragmentAllChat) : super()
+    constructor(chatList: ObservableArrayList<ChatItem>) : super()
     {
-        this.context = context
-        this.fragmentAllChat = fragmentAllChat
+        this.chatList = chatList
     }
 
 
@@ -95,8 +88,6 @@ class GetAllChatAsync : AsyncTask<String, Void, String> {
             var jsonObject = JSONObject(result)
             var list = jsonObject.getJSONArray("result")
 
-            var items : ArrayList<ChatItem> = ArrayList()
-
             for(i in 0..list.length()-1)
             {
                 var c = list.getJSONObject(i)
@@ -104,10 +95,11 @@ class GetAllChatAsync : AsyncTask<String, Void, String> {
                 var chat_num = c.getString("chat_num")
                 var chatroom_people = c.getString("chatroom_people")
 
-                items.add(ChatItem(chat_num,title,chatroom_people))
+                chatList.add(ChatItem(chat_num,title,chatroom_people))
+
             }
 
-            fragmentAllChat.setRecyclerAdater(items)
+
         }
         catch (e : Exception)
         {

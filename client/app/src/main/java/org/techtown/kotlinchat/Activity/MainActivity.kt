@@ -23,8 +23,6 @@ import org.techtown.kotlinchat.R
 
 class MainActivity : AppCompatActivity() {
 
-
-
     var prevMenuItem: MenuItem? = null
     lateinit var fragmentAllChat: FragmentAllChat
     lateinit var fragmentMyChat: FragmentMyChat

@@ -1,34 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
 
-    <TextView
-            android:id="@+id/chatroom_id"
-            android:layout_marginLeft="5dp"
-            android:gravity="center_vertical"
-            android:layout_weight="1"
-            android:text="채팅방ID"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"/>
-    <TextView
-            android:id="@+id/chatroom_title"
-            android:layout_marginLeft="5dp"
-            android:gravity="center_vertical"
-            android:layout_weight="3"
-            android:text="채팅방 제목"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"/>
+<layout>
+    <data>
 
-    <TextView
-            android:id="@+id/chatroom_people"
-            android:layout_marginLeft="5dp"
-            android:gravity="center_vertical"
-            android:layout_weight="1"
-            android:text="채팅방 인원"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"/>
+        <import type="androidx.databinding.ObservableArrayList"/>
+        <import type="org.techtown.kotlinchat.Item.ChatItem"/>
+        <variable
+                name="viewModel"
+                type="org.techtown.kotlinchat.Fragment.AllChatViewModel"/>
+        <variable
+                name="pos"
+                type="int"/>
 
-</LinearLayout>
+    </data>
+
+    <LinearLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+        <TextView
+                android:id="@+id/chatroom_id"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@{viewModel.chatList.get(pos).chatroom_ID}"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
+        <TextView
+                android:id="@+id/chatroom_title"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:layout_weight="3"
+                android:text="@{viewModel.chatList.get(pos).chatroom_title}"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
+
+        <TextView
+                android:id="@+id/chatroom_people"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@{viewModel.chatList.get(pos).chatroom_people}"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
+
+    </LinearLayout>
+</layout>

@@ -1,51 +1,52 @@
 package org.techtown.kotlinchat.Adapter
 
-import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import org.techtown.kotlinchat.Item.ChatItem
-import org.techtown.kotlinchat.R
+import org.techtown.kotlinchat.Fragment.AllChatViewModel
+import org.techtown.kotlinchat.databinding.RecyclerviewItemBinding
 
-class RAdapter(private val myDataSet:ArrayList<ChatItem>) : RecyclerView.Adapter<RAdapter.MyViewHolder>() {
+class RAdapter(viewModel: AllChatViewModel) : RecyclerView.Adapter<RAdapter.MyViewHolder>() {
+
+    private var viewModel : AllChatViewModel
+    init {
+        this.viewModel = viewModel
+    }
     class MyViewHolder : RecyclerView.ViewHolder
     {
-        var chatroom_title : TextView
-        var chatroom_ID: TextView
-        var chatroom_people : TextView
-        var context: Context
+        var binding : RecyclerviewItemBinding
 
-        constructor(itemView: View, context: Context) :super(itemView) {
-            this.chatroom_ID = itemView.findViewById(R.id.chatroom_id)
-            this.chatroom_title = itemView.findViewById(R.id.chatroom_title)
-            this.chatroom_people = itemView.findViewById(R.id.chatroom_people)
-            this.context = context
+        constructor(binding: RecyclerviewItemBinding) : super(binding.root)  {
+            this.binding = binding
         }
+
+        fun bind(viewModel: AllChatViewModel, pos : Int)
+        {
+            binding.viewModel = viewModel
+            binding.pos = pos
+            binding.executePendingBindings()
+        }
+
 
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val linearLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recyclerview_item, parent, false) as LinearLayout
 
-        return MyViewHolder(linearLayout,parent.context)
+        val binding : RecyclerviewItemBinding = RecyclerviewItemBinding.inflate(LayoutInflater.from(parent.context), parent,false)
+
+        return MyViewHolder(binding)
     }
 
 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        holder.chatroom_ID.text = myDataSet[position].chatroom_ID
-        holder.chatroom_title.text = myDataSet[position].chatroom_title
-        holder.chatroom_people.text = myDataSet[position].chatroom_people
+        holder.bind(viewModel, position)
     }
 
     override fun getItemCount(): Int {
 
-        return myDataSet.size
+        return viewModel.chatList.size
     }
 }

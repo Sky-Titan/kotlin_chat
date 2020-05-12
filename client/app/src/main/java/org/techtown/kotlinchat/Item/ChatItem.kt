@@ -1,20 +1,7 @@
 package org.techtown.kotlinchat.Item
 
-class ChatItem {
+data class ChatItem(val chatroom_ID: String, val chatroom_title: String, val chatroom_people: String) {
 
-    lateinit var chatroom_ID: String;
-    lateinit var chatroom_title: String;
-    lateinit var chatroom_people:String;
 
-    constructor(chatroom_ID: String, chatroom_title: String, chatroom_people: String) {
-        this.chatroom_ID = chatroom_ID
-        this.chatroom_title = chatroom_title
-        this.chatroom_people = chatroom_people
-    }
-
-    constructor()
-    {
-
-    }
 
 }
