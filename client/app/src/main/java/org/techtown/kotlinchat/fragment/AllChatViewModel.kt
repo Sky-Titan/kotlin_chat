@@ -17,8 +17,6 @@ class AllChatViewModel() : ViewModel() {
 
         chatList = MyApplication.INSTANCE.chatList
 
-        println("채팅 아이디${chatList[0].chatroom_ID}")
-        println("사이즈 : ${chatList.size}")
         adapter = RAdapter(this)
 
     }

@@ -2,6 +2,7 @@ package org.techtown.kotlinchat.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import org.techtown.kotlinchat.fragment.AllChatViewModel
 import org.techtown.kotlinchat.databinding.RecyclerviewItemBinding
@@ -19,6 +20,12 @@ class RAdapter(viewModel: AllChatViewModel) : RecyclerView.Adapter<RAdapter.MyVi
 
         constructor(binding: RecyclerviewItemBinding) : super(binding.root)  {
             this.binding = binding
+
+            //TODO 아이템 클릭 리스너
+            //리플 이펙트는 xml의 LinearLayout에 적용
+            binding.root.setOnClickListener(View.OnClickListener {
+                println("테스트")
+            })
         }
 
         fun bind(viewModel: AllChatViewModel, pos : Int)
@@ -26,7 +33,6 @@ class RAdapter(viewModel: AllChatViewModel) : RecyclerView.Adapter<RAdapter.MyVi
             binding.apply {  chatItem = viewModel.chatList[pos]}
             binding.executePendingBindings()
         }
-
 
     }
 
