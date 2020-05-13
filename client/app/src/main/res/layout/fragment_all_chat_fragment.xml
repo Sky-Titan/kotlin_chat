@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
         xmlns:bind="http://schemas.android.com/tools"
-
         >
 
+    
     <data>
 
         <variable
                 name="viewModel"
-                type="org.techtown.kotlinchat.Fragment.AllChatViewModel" />
+                type="org.techtown.kotlinchat.fragment.AllChatViewModel" />
     </data>
 
     <LinearLayout
@@ -20,11 +20,51 @@
             android:orientation="vertical"
             >
 
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+            <TextView
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:text="채팅번호"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+            <TextView
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:layout_weight="3"
+                    android:textColor="@color/black"
+                    android:text="제목"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+
+            <TextView
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:text="인원"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <View
+                android:background="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"></View>
+
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/allchat_recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                bind:verAdapter="@{viewModel.adapter}"></androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                bind:setAdapter="@{viewModel.adapter}"
+                ></androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 </layout>

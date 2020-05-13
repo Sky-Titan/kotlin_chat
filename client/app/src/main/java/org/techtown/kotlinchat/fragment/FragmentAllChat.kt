@@ -1,11 +1,10 @@
-package org.techtown.kotlinchat.Fragment
+package org.techtown.kotlinchat.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 
 import org.techtown.kotlinchat.R
@@ -17,25 +16,24 @@ class FragmentAllChat : Fragment() {
         fun newInstance() = FragmentAllChat()
     }
 
-    private lateinit var myView : View
-
-    private lateinit var recyclerView : RecyclerView
     private lateinit var viewModel: AllChatViewModel
     private lateinit var binding : FragmentAllChatFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_all_chat_fragment,container,false)
-        recyclerView = myView.findViewById(R.id.allchat_recyclerview) as RecyclerView
+        binding = FragmentAllChatFragmentBinding.inflate(inflater,container,false)
 
         viewModel = AllChatViewModel()
-        viewModel.onCreate()
-        //binding.setVariable()
+
+        binding.viewModel = viewModel
+
         return binding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
 
 
-
+    }
 }

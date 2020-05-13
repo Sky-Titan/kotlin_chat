@@ -1,13 +1,12 @@
-package org.techtown.kotlinchat.Activity
+package org.techtown.kotlinchat.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_sign_in.*
-import kotlinx.android.synthetic.main.activity_sign_up.*
 import org.techtown.kotlinchat.R
-import org.techtown.kotlinchat.Async.SignInAsync
+import org.techtown.kotlinchat.async.SignInAsync
 
 class SignInActivity : AppCompatActivity() {
 

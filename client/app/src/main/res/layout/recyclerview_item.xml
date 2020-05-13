@@ -3,14 +3,11 @@
 <layout>
     <data>
 
-        <import type="androidx.databinding.ObservableArrayList"/>
-        <import type="org.techtown.kotlinchat.Item.ChatItem"/>
+
         <variable
-                name="viewModel"
-                type="org.techtown.kotlinchat.Fragment.AllChatViewModel"/>
-        <variable
-                name="pos"
-                type="int"/>
+                name="chatItem"
+                type="org.techtown.kotlinchat.item.ChatItem"/>
+
 
     </data>
 
@@ -27,7 +24,8 @@
                 android:layout_marginLeft="5dp"
                 android:gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@{viewModel.chatList.get(pos).chatroom_ID}"
+                android:textColor="@color/black"
+                android:text="@{chatItem.chatroom_ID}"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"/>
         <TextView
@@ -35,7 +33,8 @@
                 android:layout_marginLeft="5dp"
                 android:gravity="center_vertical"
                 android:layout_weight="3"
-                android:text="@{viewModel.chatList.get(pos).chatroom_title}"
+                android:textColor="@color/black"
+                android:text="@{chatItem.chatroom_title}"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"/>
 
@@ -44,7 +43,8 @@
                 android:layout_marginLeft="5dp"
                 android:gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@{viewModel.chatList.get(pos).chatroom_people}"
+                android:textColor="@color/black"
+                android:text="@{chatItem.chatroom_people}"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"/>
 

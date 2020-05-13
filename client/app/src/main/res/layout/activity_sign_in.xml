@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".Activity.SignInActivity">
+        tools:context=".activity.SignInActivity">
 
     <EditText
             android:id="@+id/userID_edit_signin"

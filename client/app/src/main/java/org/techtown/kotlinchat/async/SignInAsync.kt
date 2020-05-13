@@ -1,4 +1,4 @@
-package org.techtown.kotlinchat.Async
+package org.techtown.kotlinchat.async
 
 import android.content.Context
 import android.content.Intent
@@ -6,8 +6,8 @@ import android.os.AsyncTask
 import android.util.Log
 import android.widget.Toast
 import org.json.JSONObject
-import org.techtown.kotlinchat.Activity.MainActivity
-import org.techtown.kotlinchat.Activity.SignInActivity
+import org.techtown.kotlinchat.activity.MainActivity
+import org.techtown.kotlinchat.activity.SignInActivity
 import org.techtown.kotlinchat.MyApplication
 import java.io.BufferedReader
 import java.io.InputStream
@@ -16,34 +16,35 @@ import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
 
-class SendTokenToServerAsync : AsyncTask<String, Void, String> {
+class SignInAsync : AsyncTask<String, Void, String>{
 
-    private val serverURL = "http://${MyApplication.INSTANCE.IP_address}/kotlin_chat/getToken.php"
+    private val serverURL = "http://${MyApplication.INSTANCE.IP_address}/kotlin_chat/signin.php"
     private var context : Context
-    private var activity : MainActivity
-    private val TAG = "SendTokenToServerAsync"
+    private var activity : SignInActivity
+    private val TAG = "SignInAsync"
     private lateinit var user_ID : String
-    private lateinit var token : String
 
-    constructor(context : Context, activity: MainActivity) : super()
+    constructor(context : Context, activity: SignInActivity) : super()
     {
         this.context = context
         this.activity = activity
     }
 
+
     override fun onPostExecute(result: String?) {
         super.onPostExecute(result)
 
+        isComplete(result)
     }
 
     override fun doInBackground(vararg params: String?): String {
         var user_ID = params[0]
-        var token = params[1]
+        var user_password = params[1]
 
-        var postParameters ="user_ID=$user_ID&token=$token"
+        var postParameters ="user_ID=$user_ID&user_password=$user_password"
 
         this.user_ID = user_ID.toString()
-        Log.d(TAG,"send token to server")
+
         try {
             var url = URL(serverURL)
             val httpURLConnection = url.openConnection() as HttpURLConnection
@@ -90,6 +91,45 @@ class SendTokenToServerAsync : AsyncTask<String, Void, String> {
             return "Error : ${e.message}"
         }
 
+    }
+
+    //로그인 완료 여부 판단
+    private fun isComplete(result: String?)
+    {
+        try {
+            var jsonObject = JSONObject(result)
+            var list = jsonObject.getJSONArray("result")
+
+            for(i in 0..list.length()-1)
+            {
+                var c = list.getJSONObject(i)
+                var title = c.getString("title")//로그인 성공, 실패 여부
+
+                if(title.equals("fail"))//로그인 실패
+                {
+                    var cause = c.getString("cause")
+
+                    //에러 메시지 띄움
+                    activity.runOnUiThread(Runnable {
+                        if(cause.equals("password wrong"))
+                            Toast.makeText(context,"비밀번호가 틀렸습니다.",Toast.LENGTH_SHORT).show()
+                        else
+                            Toast.makeText(context,"해당 ID가 존재하지 않습니다.",Toast.LENGTH_SHORT).show()
+                    })
+
+                }
+                else//로그인 성공
+                {
+                    var getAllChatAsync = GetAllChatAsync(context,activity)
+                    getAllChatAsync.execute()
+                    MyApplication.INSTANCE.user_ID=user_ID
+                }
+            }
+        }
+        catch (e : Exception)
+        {
+            e.printStackTrace()
+        }
     }
 
 }

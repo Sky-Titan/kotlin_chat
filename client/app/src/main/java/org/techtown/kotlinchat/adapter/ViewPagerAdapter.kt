@@ -1,4 +1,4 @@
-package org.techtown.kotlinchat.Adapter
+package org.techtown.kotlinchat.adapter
 
 
 import androidx.fragment.app.Fragment

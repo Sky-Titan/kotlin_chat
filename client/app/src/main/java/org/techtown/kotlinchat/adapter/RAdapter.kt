@@ -1,9 +1,9 @@
-package org.techtown.kotlinchat.Adapter
+package org.techtown.kotlinchat.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import org.techtown.kotlinchat.Fragment.AllChatViewModel
+import org.techtown.kotlinchat.fragment.AllChatViewModel
 import org.techtown.kotlinchat.databinding.RecyclerviewItemBinding
 
 class RAdapter(viewModel: AllChatViewModel) : RecyclerView.Adapter<RAdapter.MyViewHolder>() {
@@ -11,6 +11,7 @@ class RAdapter(viewModel: AllChatViewModel) : RecyclerView.Adapter<RAdapter.MyVi
     private var viewModel : AllChatViewModel
     init {
         this.viewModel = viewModel
+
     }
     class MyViewHolder : RecyclerView.ViewHolder
     {
@@ -22,8 +23,7 @@ class RAdapter(viewModel: AllChatViewModel) : RecyclerView.Adapter<RAdapter.MyVi
 
         fun bind(viewModel: AllChatViewModel, pos : Int)
         {
-            binding.viewModel = viewModel
-            binding.pos = pos
+            binding.apply {  chatItem = viewModel.chatList[pos]}
             binding.executePendingBindings()
         }
 

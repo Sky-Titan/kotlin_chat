@@ -1,14 +1,11 @@
-package org.techtown.kotlinchat.Async
+package org.techtown.kotlinchat.async
 
 import android.content.Context
-import android.content.Intent
 import android.os.AsyncTask
 import android.util.Log
 import android.widget.Toast
-import org.json.JSONException
 import org.json.JSONObject
-import org.techtown.kotlinchat.Activity.MainActivity
-import org.techtown.kotlinchat.Activity.SignInActivity
+import org.techtown.kotlinchat.activity.SignUpActivity
 import org.techtown.kotlinchat.MyApplication
 import java.io.BufferedReader
 import java.io.InputStream
@@ -17,15 +14,15 @@ import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
 
-class SignInAsync : AsyncTask<String, Void, String>{
+class SignUpAsync : AsyncTask<String, Void, String> {
 
-    private val serverURL = "http://${MyApplication.INSTANCE.IP_address}/kotlin_chat/signin.php"
+    private val serverURL = "http://${MyApplication.INSTANCE.IP_address}/kotlin_chat/signup.php"
     private var context : Context
-    private var activity : SignInActivity
-    private val TAG = "SignInAsync"
+    private var activity : SignUpActivity
+    private val TAG = "SignUpAsync"
     private lateinit var user_ID : String
 
-    constructor(context : Context, activity: SignInActivity) : super()
+    constructor(context : Context, activity: SignUpActivity) : super()
     {
         this.context = context
         this.activity = activity
@@ -94,7 +91,7 @@ class SignInAsync : AsyncTask<String, Void, String>{
 
     }
 
-    //로그인 완료 여부 판단
+    //회원가입 완료 여부 판단
     private fun isComplete(result: String?)
     {
         try {
@@ -104,29 +101,28 @@ class SignInAsync : AsyncTask<String, Void, String>{
             for(i in 0..list.length()-1)
             {
                 var c = list.getJSONObject(i)
-                var title = c.getString("title")//로그인 성공, 실패 여부
+                var title = c.getString("title")//회원가입 성공, 실패 여부
 
-                if(title.equals("fail"))//로그인 실패
+                if(title.equals("fail"))//회원가입 실패
                 {
                     var cause = c.getString("cause")
 
                     //에러 메시지 띄움
                     activity.runOnUiThread(Runnable {
-                        if(cause.equals("password wrong"))
-                            Toast.makeText(context,"비밀번호가 틀렸습니다.",Toast.LENGTH_SHORT).show()
+                        if(cause.equals("user exist"))
+                            Toast.makeText(context,"해당 ID가 이미 존재 합니다.", Toast.LENGTH_SHORT).show()
                         else
-                            Toast.makeText(context,"해당 ID가 존재하지 않습니다.",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context,"회원가입 실패 : 데이터베이스 에러", Toast.LENGTH_SHORT).show()
                     })
 
                 }
-                else//로그인 성공
+                else//회원가입 성공
                 {
-                    var intent = Intent(context, MainActivity::class.java)
+                    //Signin activity로 돌아감
+                    activity.runOnUiThread(Runnable {
 
-                    //전역 클래스에 로그인 id 등록
-                    MyApplication.INSTANCE.user_ID = user_ID
-
-                    context.startActivity(intent)
+                            Toast.makeText(context,"회원가입 성공", Toast.LENGTH_SHORT).show()
+                    })
                     activity.finish()
                 }
             }
@@ -136,5 +132,4 @@ class SignInAsync : AsyncTask<String, Void, String>{
             e.printStackTrace()
         }
     }
-
 }

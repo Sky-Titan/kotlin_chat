@@ -1,4 +1,4 @@
-package org.techtown.kotlinchat.Fragment
+package org.techtown.kotlinchat.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

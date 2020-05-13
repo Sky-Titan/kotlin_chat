@@ -30,16 +30,16 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             >
-        <activity android:name=".Activity.SignUpActivity">
+        <activity android:name=".activity.SignUpActivity">
         </activity>
-        <activity android:name=".Activity.SignInActivity">
+        <activity android:name=".activity.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.MainActivity">
+        <activity android:name=".activity.MainActivity">
         </activity>
         <service
                 android:name=".MyFirebaseMessagingService"

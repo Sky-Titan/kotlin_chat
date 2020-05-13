@@ -1,10 +1,9 @@
-package org.techtown.kotlinchat.Async
+package org.techtown.kotlinchat.async
 
+import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
-import androidx.databinding.ObservableArrayList
-import org.json.JSONObject
-import org.techtown.kotlinchat.Item.ChatItem
+import org.techtown.kotlinchat.activity.MainActivity
 import org.techtown.kotlinchat.MyApplication
 import java.io.BufferedReader
 import java.io.InputStream
@@ -13,37 +12,45 @@ import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
 
-class GetAllChatAsync : AsyncTask<String, Void, String> {
+class SendTokenToServerAsync : AsyncTask<String, Void, String> {
 
-    private val serverURL = "http://${MyApplication.INSTANCE.IP_address}/kotlin_chat/getAllChat.php"
+    private val serverURL = "http://${MyApplication.INSTANCE.IP_address}/kotlin_chat/getToken.php"
+    private var context : Context
+    private var activity : MainActivity
+    private val TAG = "SendTokenToServerAsync"
+    private lateinit var user_ID : String
+    private lateinit var token : String
 
-    private val TAG = "GetAllChatAsync"
-    var chatList: ObservableArrayList<ChatItem>
-
-    constructor(chatList: ObservableArrayList<ChatItem>) : super()
+    constructor(context : Context, activity: MainActivity) : super()
     {
-        this.chatList = chatList
+        this.context = context
+        this.activity = activity
     }
-
 
     override fun onPostExecute(result: String?) {
         super.onPostExecute(result)
 
-        isComplete(result)
     }
 
     override fun doInBackground(vararg params: String?): String {
+        var user_ID = params[0]
+        var token = params[1]
 
+        var postParameters ="user_ID=$user_ID&token=$token"
+
+        this.user_ID = user_ID.toString()
+        Log.d(TAG,"send token to server")
         try {
             var url = URL(serverURL)
             val httpURLConnection = url.openConnection() as HttpURLConnection
 
             httpURLConnection.readTimeout = 5000
             httpURLConnection.connectTimeout = 5000
-            httpURLConnection.requestMethod = "GET"
+            httpURLConnection.requestMethod = "POST"
             httpURLConnection.connect()
 
             val outputStream = httpURLConnection.outputStream
+            outputStream.write(postParameters.toByteArray(charset("euckr")))
             outputStream.flush()
             outputStream.close()
 
@@ -81,29 +88,4 @@ class GetAllChatAsync : AsyncTask<String, Void, String> {
 
     }
 
-    //chatting room 전체 정보
-    private fun isComplete(result: String?)
-    {
-        try {
-            var jsonObject = JSONObject(result)
-            var list = jsonObject.getJSONArray("result")
-
-            for(i in 0..list.length()-1)
-            {
-                var c = list.getJSONObject(i)
-                var title = c.getString("title")
-                var chat_num = c.getString("chat_num")
-                var chatroom_people = c.getString("chatroom_people")
-
-                chatList.add(ChatItem(chat_num,title,chatroom_people))
-
-            }
-
-
-        }
-        catch (e : Exception)
-        {
-            e.printStackTrace()
-        }
-    }
 }

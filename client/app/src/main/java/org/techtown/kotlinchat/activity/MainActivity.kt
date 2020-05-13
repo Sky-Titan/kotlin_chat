@@ -1,4 +1,4 @@
-package org.techtown.kotlinchat.Activity
+package org.techtown.kotlinchat.activity
 
 import android.os.Bundle
 import android.util.Log
@@ -13,10 +13,10 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
-import org.techtown.kotlinchat.Adapter.ViewPagerAdapter
-import org.techtown.kotlinchat.Async.SendTokenToServerAsync
-import org.techtown.kotlinchat.Fragment.FragmentAllChat
-import org.techtown.kotlinchat.Fragment.FragmentMyChat
+import org.techtown.kotlinchat.adapter.ViewPagerAdapter
+import org.techtown.kotlinchat.async.SendTokenToServerAsync
+import org.techtown.kotlinchat.fragment.FragmentAllChat
+import org.techtown.kotlinchat.fragment.FragmentMyChat
 import org.techtown.kotlinchat.MyApplication
 import org.techtown.kotlinchat.NonSwipeViewPager
 import org.techtown.kotlinchat.R
